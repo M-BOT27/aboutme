@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manoviraj Gill - Resume</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-image: url('bg.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            color: #ddddff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 120px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s ease forwards;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #ddddff;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            color: #ddddff;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ddddff;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: #2997ff;
+            border-radius: 50%;
+        }
+
+        .section {
+            background: rgba(29, 29, 31, 0.9);
+            border-radius: 18px;
+            padding: 40px;
+            margin: 30px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+       
+        .experience-item {
+            margin: 30px 0;
+            padding: 20px;
+            border-left: 3px solid #2997ff;
+            background: rgba(255, 255, 255, 0.03);
+            transition: transform 0.4s ease, background 0.4s ease;
+            border-radius: 8px;
+        }
+
+        .experience-item:hover {
+            background: rgba(103, 80, 164, 0.05);
+            transform: translateX(8px);
+        }
+
+        .floating-nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(41, 151, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 15px 30px;
+            display: flex;
+            gap: 25px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link {
+            color: #ddddff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #2997ff;
+        }
+
+
+        .download-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2997ff;
+            color: #ddddff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #0071e3;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        a {
+            color: #2997ff;
+            text-decoration: none;
+        }
+
+        ul {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            color: #2997ff;
+            position: absolute;
+            left: -20px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+            
+            .download-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 20px;
+            }
+        }
+
+        @media print {
+            .download-btn,
+            .floating-nav {
+                display: none !important;
+            }
+
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .section {
+                background: transparent !important;
+                backdrop-filter: none !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
+
+            .experience-item {
+                page-break-inside: avoid;
+            }
+
+            .container {
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+            .stacked-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease;
+        }
+
+        .stacked-section.visible {
+            max-height: 1000px;
+        }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="floating-nav">
+        <div class="nav-link" onclick="scrollToSection('about')">About</div>
+        <div class="nav-link" onclick="scrollToSection('experience')">Experience</div>
+        <div class="nav-link" onclick="scrollToSection('projects')">Projects</div>
+        <div class="nav-link" onclick="scrollToSection('contact')">Contact</div>
+    </nav>
+
+    <button class="download-btn" onclick="generatePDF()">Download PDF</button>
+    <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        
+    <div class="container">
+        <section class="hero">
+            <h1>Manoviraj Gill</h1>
+            <h2>Computer Science Engineer</h2>
+            <p style="max-width: 800px; margin: 0 auto; color: #ddddff;">
+                As a Computer Science Engineering student at Manipal University Jaipur, I'm driven by a passion for technology and innovation. I'm proficient in Python, Java, C, C++ and enjoy building projects and solving challenging problems. I'm an active member of tech clubs and a strong believer in hands-on learning. Eager to contribute my skills and learn from experienced professionals in a dynamic environment.
+            </p>
+        </section>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        
+
+
+        <!-- Contact Section -->
+        <section class="section" id="contact">
+            <h3>CONTACT</h3>
+            <div class="contact-grid">
+                <div>📧 manovirajgill@gmail.com</div>
+                <div>🌐 <a href="https://manovirajgill.github.io/portfolio">Portfolio</a></div>
+                <div>🔗 <a href="https://linkedin.com/in/manovirajgill">LinkedIn</a></div>
+                <div>📱 +91 7977724327</div>
+                <div>📍 Mumbai, MH</div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="section">
+            <h3>EDUCATION</h3>
+            <div class="experience-item">
+                <div style="font-weight:500;margin-bottom:8px;">MANIPAL UNIVERSITY JAIPUR</div>
+                <div>B.Tech, Computer Science Engineering</div>
+                <div style="color:#86868b;margin-top:8px;">2022 - 2026</div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section">
+            <h3>SKILLS</h3>
+            <div class="contact-grid">
+                <div>• Python</div>
+                <div>• Java</div>
+                <div>• MySQL</div>
+                <div>• Mong DB</div>
+                <div>• API Intigration</div>
+                <div>• Data Structures & Algorithms</div>
+                <div>• Github</div>
+                <div>• Data Analytics </div>
+                <div>• Debugging and Testing</div>
+                <div>• Pandas</div>
+                <div>• Flask</div>
+                <div>• Web Development</div>
+                <div>• Project Management</div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section class="section" id="experience">
+            <h3>EXPERIENCE</h3>
+            <div class="experience-item">
+                <div style="font-weight:500;margin-bottom:8px;">Precise Stock Alerts, Inc. - Software Development Intern</div>
+                <div style="color:#86868b;margin-bottom:12px;">December 2024 - July 2024</div>
+                <ul>
+                    <li>Implemented server-side security solutions and screened malicious files</li>
+                    <li>Automated Discord tasks using bots built with Discord.py library</li>
+                    <li>Optimized server backend resulting in a 49% faster client experience</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div style="font-weight:500;margin-bottom:8px;">Advoyager.io - Senior Software Development Intern</div>
+                <div style="color:#86868b;margin-bottom:12px;">January 2024 - May 2024</div>
+                <ul>
+                    <li>Led team in building backend and database for ad automation platform</li>
+                    <li>Implemented Flask backend with MongoDB database</li>
+                    <li>Developed client dashboard and improved team leadership skills</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div style="font-weight:500;margin-bottom:8px;">Sunbase Data - Junior Intern</div>
+                <div style="color:#86868b;margin-bottom:12px;">June 2024 - August 2024</div>
+                <ul>
+                    <li>Collaborated with a team to debug and optimize existing codebases for better performance and security.</li>
+                    <li>Asisted professionals with server-side maintainaince</li>
+                    <li>Developed automation scripts using Python to simplify repititive tasks.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section" id="projects">
+            <h3>PROJECTS</h3>
+            <div class="experience-item">
+                <div style="font-weight:500;margin-bottom:8px;">ClassNote - Open Source Learning Tool</div>
+                <div style="color:#86868b;margin-bottom:12px;">February 2023 - December 2024</div>
+                <ul>
+                    <li>Developed AI-powered notes generator using Gemini API</li>
+                    <li>Created Windows app version with Tkinter library</li>
+                    <li>Used by 500+ students for efficient studying</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section').forEach((section) => {
+            observer.observe(section);
+        });
+
+        // FAB Click Handler
+        document.querySelector('.download-btn').addEventListener('click', () => {
+            window.print();
+        });
+
+         
+
+        // PDF Generation
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const content = document.querySelector('.container').cloneNode(true);
+            
+            // Remove interactive elements
+            content.querySelector('.download-btn').remove();
+            
+            // Reset animations for PDF
+            content.querySelectorAll('.section').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+                el.style.background = '#1d1d1f';
+            });
+
+            doc.html(content, {
+                callback: function(doc) {
+                    doc.save('ManovirajGill-Resume.pdf');
+                },
+                x: 10,
+                y: 10,
+                width: 190,
+                windowWidth: 1200
+            });
+        }
+        // Smooth Scroll
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.querySelector('.avatar').style.transform = 
+                `translateY(${scrolled * 0.1}px) scale(${1 - scrolled * 0.0002})`;
+        });
+    </script>
+</body>
+</html>
