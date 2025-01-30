@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manoviraj Gill - Resume</title>
+    <title>Manoviraj Gill</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * {
@@ -17,7 +17,6 @@
             background-image: url('bg.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
-            background-size:cover;
 
             color: #ddddff;
             line-height: 1.6;
@@ -76,10 +75,11 @@
             border-radius: 18px;
             padding: 40px;
             margin: 30px 0;
+            backdrop-filter: blur(10px);
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.6s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(41, 151, 255, 0.1);
         }
 
         .section.visible {
@@ -90,6 +90,7 @@
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            backdrop-filter: blur(10px);
             gap: 20px;
             margin-top: 20px;
         }
@@ -100,6 +101,7 @@
             padding: 20px;
             border-left: 3px solid #2997ff;
             background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
             transition: transform 0.4s ease, background 0.4s ease;
             border-radius: 8px;
         }
@@ -139,24 +141,26 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: #2997ff;
-            color: #ddddff;
-            padding: 12px 24px;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            background: #0071e3;
+            backdrop-filter: blur(20px);
+            transition: transform 0.4s ease, background 0.4s ease;
+            border-radius: 30px;
+            padding: 15px 30px;
+            display: flex;
+            gap: 25px;
+            z-index: 1000;
+            border: 1px solid rgba(0, 0, 158, 0.1);
         }
-
         .download-btn:hover {
             background: #0071e3;
+            transform: scale(1.3);
         }
 
         @keyframes fadeUp {
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform:transform 1s ease, translateY(1);
             }
         }
 
@@ -251,7 +255,7 @@
         <br><br/>
         <br><br/>
         
-    <div class="container">
+    <div class="container" id="about">
         <section class="hero">
             <h1>Manoviraj Gill</h1>
             <h2>Computer Science Engineer</h2>
@@ -275,11 +279,11 @@
         <section class="section" id="contact">
             <h3>CONTACT</h3>
             <div class="contact-grid">
-                <div>📧 manovirajgill@gmail.com</div>
-                <div>🌐 <a href="https://manovirajgill.github.io/portfolio">Portfolio</a></div>
-                <div>🔗 <a href="https://linkedin.com/in/manovirajgill">LinkedIn</a></div>
-                <div>📱 +91 7977724327</div>
-                <div>📍 Mumbai, MH</div>
+                <div> <a href="mailto:manovirajgill@gmail.com">Email</a></div>
+                <div> <a href="https://manovirajgill.github.io/portfolio">Portfolio</a></div>
+                <div> <a href="https://linkedin.com/in/manovirajgill">LinkedIn</a></div>
+                <div> +91 7977724327</div>
+                <div> Mumbai, MH</div>
             </div>
         </section>
 
@@ -306,6 +310,7 @@
                 <div>• Github</div>
                 <div>• Data Analytics </div>
                 <div>• Debugging and Testing</div>
+                <div>• Tkinter</div>
                 <div>• Pandas</div>
                 <div>• Flask</div>
                 <div>• Web Development</div>
